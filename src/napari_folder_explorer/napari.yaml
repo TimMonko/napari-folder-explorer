@@ -21,8 +21,8 @@ contributions:
       python_name: napari_folder_explorer._widget:example_magic_widget
       title: Make example magic widget
     - id: napari-folder-explorer.make_func_widget
-      python_name: napari_folder_explorer._widget:example_function_widget
-      title: Make example function widget
+      python_name: napari_folder_explorer._widget:folder_explorer
+      title: Folder Explorer
   readers:
     - command: napari-folder-explorer.get_reader
       accepts_directories: false
@@ -45,4 +45,5 @@ contributions:
       display_name: Example Magic Widget
     - command: napari-folder-explorer.make_func_widget
       autogenerate: true
-      display_name: Example Function Widget
+      display_name: Folder Explorer
+

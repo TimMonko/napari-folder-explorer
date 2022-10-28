@@ -44,3 +44,38 @@ def example_magic_widget(img_layer: "napari.layers.Image"):
 # a widget.
 def example_function_widget(img_layer: "napari.layers.Image"):
     print(f"you have selected {img_layer}")
+    
+
+    
+import napari
+from magicgui import magicgui
+from magicgui import widgets
+import pathlib
+from typing import TYPE_CHECKING, List
+
+if TYPE_CHECKING:
+    # your plugin doesn't need to import napari at all just to use these types
+    # just put these imports here and wrap the hints in quotes
+    import napari.types
+    import napari.viewer
+
+    
+@magicgui(
+    call_button='Add Image',
+    file_directory = dict(widget_type = 'FileEdit', mode = 'd', label = 'Select Directory'),
+    search_field = dict(widget_type = 'LineEdit', label = 'File Type'),
+    file_select = dict(widget_type = 'Select', label = 'Choose File')
+)
+def folder_explorer(
+    viewer: 'napari.viewer.Viewer',
+    file_directory= pathlib.Path(),
+    search_field = '*.czi',
+    file_select = []
+):
+    viewer.open(file_select, plugin = 'napari-aicsimageio')
+
+@folder_explorer.file_directory.changed.connect
+def _update_file_select(file_directory):
+    choices = list(file_directory.glob(pattern=folder_explorer.search_field.value))
+    folder_explorer.file_select.choices = choices
+
